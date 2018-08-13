@@ -18,3 +18,7 @@ This is helpful for writeroom-mode, in particular."
 
 
 (provide 'init-fonts)
+
+(set-face-attribute 'default nil
+                    :family "Inconsolata"
+                    :height 180 :weight 'normal)
