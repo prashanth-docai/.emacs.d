@@ -44,5 +44,8 @@
 
 (add-auto-mode 'conf-mode "^Procfile\\'")
 
+(set-face-attribute 'default nil
+                    :family "Inconsolata"
+                    :height 180 :weight 'normal)
 
 (provide 'init-misc)
