@@ -1,4 +1,7 @@
-;;; -*- lexical-binding: t -*-
+;;; init-ivy.el --- Use ivy for minibuffer completion and more -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
+
 (when (maybe-require-package 'ivy)
   (add-hook 'after-init-hook 'ivy-mode)
   (after-load 'ivy
@@ -18,6 +21,8 @@
       (define-key ivy-minibuffer-map (kbd k) #'ivy-immediate-done))
 
     (define-key ivy-minibuffer-map (kbd "<up>") #'ivy-previous-line-or-history)
+
+    (define-key ivy-occur-mode-map (kbd "C-c C-q") #'ivy-wgrep-change-to-wgrep-mode)
 
     (when (maybe-require-package 'diminish)
       (diminish 'ivy-mode)))
@@ -61,6 +66,8 @@ instead."
                            (projectile-project-root)
                          (error default-directory)))))
             (funcall search-function initial-input dir)))))
+    (after-load 'ivy
+      (add-to-list 'ivy-height-alist (cons 'counsel-ag 20)))
     (global-set-key (kbd "M-?") 'sanityinc/counsel-search-project)))
 
 
@@ -79,3 +86,4 @@ instead."
 
 
 (provide 'init-ivy)
+;;; init-ivy.el ends here
