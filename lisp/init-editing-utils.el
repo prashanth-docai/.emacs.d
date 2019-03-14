@@ -171,7 +171,16 @@
 (global-set-key (kbd "C-x C-.") 'pop-global-mark)
 
 (when (maybe-require-package 'avy)
-  (global-set-key (kbd "C-;") 'avy-goto-char-timer))
+  (global-set-key (kbd "C-;") 'avy-goto-char-timer)
+  (setq avy-case-fold-search nil)       ;; case sensitive makes selection easier
+  (global-set-key (kbd "C-;"  )  'avy-goto-char-2)  ;; I use this most frequently
+  (global-set-key (kbd "C-'"  )  'avy-goto-line)    ;; Consistent with ivy-avy
+  (global-set-key (kbd "M-g c")  'avy-goto-char)
+  (global-set-key (kbd "M-g e")  'avy-goto-word-0)  ;; lots of candidates
+  (global-set-key (kbd "M-g g")  'avy-goto-line)    ;; digits behave like goto-line
+  (global-set-key (kbd "M-g w")  'avy-goto-word-1)  ;; first character of the word
+  (global-set-key (kbd "M-g P")  'avy-pop-mark)
+  )
 
 (require-package 'multiple-cursors)
 ;; multiple-cursors
