@@ -13,7 +13,7 @@
   (define-key tagedit-mode-map (kbd "M-s") nil)
   (add-hook 'sgml-mode-hook 'emmet-mode (lambda () (tagedit-mode 1))))
 
-(add-auto-mode 'html-mode "\\.\\(jsp\\|tmpl\\|html\\)\\'")
+(add-auto-mode 'html-mode "\\.\\(jsp\\|tmpl\\|hbs\\|html\\)\\'")
 
 
 (provide 'init-html)
