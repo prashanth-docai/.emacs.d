@@ -50,7 +50,7 @@
 
 (set-face-attribute 'default nil
                     :family "Inconsolata"
-                    :height 180 :weight 'normal)
+                    :height 190 :weight 'normal)
 
 (provide 'init-misc)
 ;;; init-misc.el ends here

@@ -81,7 +81,7 @@
 (require 'init-vc)
 (require 'init-darcs)
 (require 'init-git)
-(require 'init-github)
+;;(require 'init-github)
 
 (require 'init-projectile)
 
@@ -92,7 +92,7 @@
 (require 'init-csv)
 (require 'init-erlang)
 (require 'init-javascript)
-(require 'init-php)
+;;(require 'init-php)
 (require 'init-org)
 (require 'init-nxml)
 (require 'init-html)
