@@ -45,7 +45,6 @@
   (require-package 'scss-mode))
 (setq-default scss-compile-at-save nil)
 
-(setq exec-path (cons (expand-file-name "/usr/local/bin/") exec-path))
 
 
 ;;; LESS

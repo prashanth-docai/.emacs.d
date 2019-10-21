@@ -7,16 +7,6 @@
 (maybe-require-package 'coffee-mode)
 (maybe-require-package 'typescript-mode)
 (maybe-require-package 'prettier-js)
-;;(maybe-require-package 'company)
-;;(maybe-require-package 'company-tern)
-
-;;(add-to-list 'company-backends 'company-tern)
-
-(add-hook 'js2-mode-hook (lambda ()
-                           ;; (tern-mode)
-                           ;; (company-mode)
-                           (flycheck-mode)
-                           (prettier-js-mode)))
 
 ;; Need to first remove from list if present, since elpa adds entries too, which
 ;; may be in an arbitrary order
@@ -35,22 +25,9 @@
   (autoload 'flycheck-get-checker-for-buffer "flycheck")
   (defun sanityinc/enable-js2-checks-if-flycheck-inactive ()
     (unless (flycheck-get-checker-for-buffer)
-      (flycheck-add-mode 'javascript-eslint 'js2-mode)
       (setq-local js2-mode-show-parse-errors t)
       (setq-local js2-mode-show-strict-warnings t)))
-
   (add-hook 'js2-mode-hook 'sanityinc/enable-js2-checks-if-flycheck-inactive)
-  (flycheck-add-mode 'javascript-eslint 'js2-mode)
-  (defun use-eslint-from-node-modules ()
-    (let* ((root (locate-dominating-file
-                  (or (buffer-file-name) default-directory)
-                  "node_modules"))
-           (eslint (and root
-                        (expand-file-name "node_modules/eslint/bin/eslint.js"
-                                          root))))
-      (when (and eslint (file-executable-p eslint))
-        (setq-local flycheck-javascript-eslint-executable eslint))))
-  (add-hook 'flycheck-mode-hook 'use-eslint-from-node-modules)
 
   (add-hook 'js2-mode-hook (lambda () (setq mode-name "JS2")))
 
