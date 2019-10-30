@@ -29,7 +29,8 @@
       (setq-local js2-mode-show-strict-warnings t)))
   (add-hook 'js2-mode-hook 'sanityinc/enable-js2-checks-if-flycheck-inactive)
 
-  (add-hook 'js2-mode-hook (lambda () (setq mode-name "JS2")))
+  (add-hook 'js2-mode-hook (lambda () (setq mode-name "JS2")
+                             (prettier-js-mode)))
 
   (js2-imenu-extras-setup))
 
