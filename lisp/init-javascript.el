@@ -7,6 +7,7 @@
 (maybe-require-package 'coffee-mode)
 (maybe-require-package 'typescript-mode)
 (maybe-require-package 'prettier-js)
+(maybe-require-package 'tide-mode)
 
 ;; Need to first remove from list if present, since elpa adds entries too, which
 ;; may be in an arbitrary order
@@ -40,6 +41,35 @@
 
 
 (add-to-list 'interpreter-mode-alist (cons "node" 'js2-mode))
+
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
+
+(after-load 'typescript-mode
+  (add-hook 'typescript-mode-hook (lambda ()
+                                    (setup-tide-mode))))
+
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1)
+  (setq company-tooltip-align-annotations t)
+  (setq-default typescript-indent-level 2)
+  (flycheck-add-mode 'typescript-tslint 'tide-mode))
+
+(setq company-tooltip-align-annotations t)
+
+
+
+(after-load 'tide-mode
+  (add-hook 'tide-mode-hook #'setup-tide-mode)
+  (add-hook 'before-save-hook 'tide-format-before-save))
 
 
 
@@ -93,6 +123,8 @@
 (when (maybe-require-package 'add-node-modules-path)
   (after-load 'typescript-mode
     (add-hook 'typescript-mode-hook 'add-node-modules-path))
+  (after-load 'tide-mode
+    (add-hook 'tide-mode-hook 'add-node-modules-path))
   (after-load 'js2-mode
     (add-hook 'js2-mode-hook 'add-node-modules-path)))
 
