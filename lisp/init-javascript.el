@@ -6,12 +6,25 @@
 (maybe-require-package 'js2-mode)
 (maybe-require-package 'coffee-mode)
 (maybe-require-package 'typescript-mode)
+(maybe-require-package 'rjsx-mode)
 (maybe-require-package 'prettier-js)
+
+(defun eslint-fix-file ()
+  (interactive)
+  (message "eslint --fixing the file" (buffer-file-name))
+  (shell-command (concat "eslint --fix " (buffer-file-name))))
+
+(defun eslint-fix-file-and-revert ()
+  (interactive)
+  (print "asdfasfd")
+  (eslint-fix-file)
+  ;; (revert-buffer t t)
+  )
 
 ;; Need to first remove from list if present, since elpa adds entries too, which
 ;; may be in an arbitrary order
 
-(add-to-list 'auto-mode-alist '("\\.\\(js\\|es6\\)\\(\\.erb\\)?\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.\\(js\\|jsx\\|es6\\)\\(\\.erb\\)?\\'" . js2-mode))
 
 ;; js2-mode
 
@@ -30,7 +43,8 @@
   (add-hook 'js2-mode-hook 'sanityinc/enable-js2-checks-if-flycheck-inactive)
 
   (add-hook 'js2-mode-hook (lambda () (setq mode-name "JS2")
-                             (prettier-js-mode)))
+                             (prettier-js-mode)
+                             ))
 
   (js2-imenu-extras-setup))
 
@@ -60,6 +74,14 @@
 
 (when (fboundp 'coffee-mode)
   (add-to-list 'auto-mode-alist '("\\.coffee\\.erb\\'" . coffee-mode)))
+
+;;; Reactjsx
+
+(when (fboundp 'rjsx-mode)
+  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode)))
+
+(after-load 'rjsx-mode
+  (add-hook 'rjsx-mode-hook (lambda () (add-hook 'after-save-hook #'eslint-fix-file-and-revert))))
 
 ;; ---------------------------------------------------------------------------
 ;; Run and interact with an inferior JS via js-comint.el
@@ -93,6 +115,8 @@
 (when (maybe-require-package 'add-node-modules-path)
   (after-load 'typescript-mode
     (add-hook 'typescript-mode-hook 'add-node-modules-path))
+  (after-load 'rjsx-mode
+    (add-hook 'rjsx-mode-hook 'add-node-modules-path))
   (after-load 'js2-mode
     (add-hook 'js2-mode-hook 'add-node-modules-path)))
 
