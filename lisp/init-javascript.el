@@ -9,6 +9,8 @@
 (maybe-require-package 'rjsx-mode)
 (maybe-require-package 'prettier-js)
 (maybe-require-package 'tide-mode)
+(maybe-require-package 'company)
+(maybe-require-package 'company-tern)
 
 (defun eslint-fix-file ()
   (interactive)
@@ -17,7 +19,6 @@
 
 (defun eslint-fix-file-and-revert ()
   (interactive)
-  (print "asdfasfd")
   (eslint-fix-file)
   ;; (revert-buffer t t)
   )
@@ -45,7 +46,9 @@
 
   (add-hook 'js2-mode-hook (lambda () (setq mode-name "JS2")
                              (prettier-js-mode)
-                             (setup-tide-mode)))
+                             (tern-mode)
+                             (company-mode)
+                             ))
 
   (js2-imenu-extras-setup))
 
@@ -150,8 +153,8 @@
   (after-load 'rjsx-mode
     (add-hook 'rjsx-mode-hook 'add-node-modules-path))
 
-  (after-load 'tide-mode
-    (add-hook 'tide-mode-hook 'add-node-modules-path))
+  ;; (after-load 'tide-mode
+  ;;   (add-hook 'tide-mode-hook 'add-node-modules-path))
 
   (after-load 'js2-mode
     (add-hook 'js2-mode-hook 'add-node-modules-path)))
